@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ATP Calculator - Beta Oxidation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 24px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: none;
+      font-size: 18px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    button {
+      background: #f39c12;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background: #e67e22;
+    }
+    .result {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      min-height: 28px;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ATP Calculator for Beta Oxidation</h1>
+    <input type="number" id="carbonInput" placeholder="Enter number of carbon atoms" min="3" />
+    <button onclick="calculateATP()">Calculate ATP</button>
+    <div class="result" id="result"></div>
+    <footer>© 2025 - Created by ChatGPT</footer>
+  </div>
+
+  <script>
+    function calculateATP() {
+      const carbonAtoms = parseInt(document.getElementById('carbonInput').value);
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(carbonAtoms) || carbonAtoms < 3) {
+        resultDiv.textContent = "Please enter a valid number (3 or more).";
+        return;
+      }
+
+      const activationCost = 2;
+      let cycles, acetylCoA, propionylCoA;
+
+      if (carbonAtoms % 2 === 0) {
+        // Even number
+        cycles = (carbonAtoms / 2) - 1;
+        acetylCoA = carbonAtoms / 2;
+        propionylCoA = 0;
+      } else {
+        // Odd number
+        cycles = (carbonAtoms - 3) / 2;
+        acetylCoA = (carbonAtoms - 3) / 2;
+        propionylCoA = 1;
+      }
+
+      const atpFromNADH_FADH2 = cycles * 5; // 3 ATP + 2 ATP per cycle
+      const atpFromAcetylCoA = acetylCoA * 12;
+      const atpFromPropionylCoA = propionylCoA * 5;
+
+      const totalATP = atpFromNADH_FADH2 + atpFromAcetylCoA + atpFromPropionylCoA - activationCost;
+
+      resultDiv.textContent = `Total ATP from a fatty acid with ${carbonAtoms} carbon atoms: ${totalATP.toFixed(2)} ATP`;
+    }
+  </script>
+</body>
+</html>
