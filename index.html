@@ -106,8 +106,8 @@
 
       const totalATP = atpFromNADH_FADH2 + atpFromAcetylCoA + atpFromPropionylCoA - activationCost;
 
-      resultDiv.textContent = `Total ATP from a fatty acid with ${carbonAtoms} carbon atoms: ${totalATP.toFixed(2)} ATP`;
-    }
+      resultDiv.innerHTML = `Total ATP from a fatty acid with ${carbonAtoms} carbon atoms: <span style="color: yellow;">${totalATP.toFixed(2)} ATP</span>`;
+}
   </script>
 </body>
 </html>
